@@ -1,0 +1,5 @@
+.vscore
+bin
+obj
+*.db
+.vs
