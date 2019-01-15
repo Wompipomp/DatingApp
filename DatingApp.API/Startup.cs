@@ -36,9 +36,11 @@ namespace DatingApp.API
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
 				options.TokenValidationParameters = new TokenValidationParameters{
 					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:token").Value))
-				}
-			})
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:token").Value)),
+					ValidateIssuer = false,
+					ValidateAudience = false
+				};
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +57,7 @@ namespace DatingApp.API
 
 			//app.UseHttpsRedirection();
 			app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
+			app.UseAuthentication();
 			app.UseMvc();
 		}
 	}
